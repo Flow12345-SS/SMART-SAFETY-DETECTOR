@@ -1,0 +1,15 @@
+path: ../data  # Base dataset directory relative to the training notebook
+
+train: images/train
+val: images/val
+test: images/test
+
+names:
+  0: person
+  1: helmet
+  2: vest
+  3: no-helmet
+  4: no-vest
+  5: fire
+  6: smoke
+  7: mobile-phone

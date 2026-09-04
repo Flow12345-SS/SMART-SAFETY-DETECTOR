@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Safety Detector</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="fa-solid fa-shield-halved"></i>
+                <span>SafetyDet</span>
+            </div>
+            <nav>
+                <a href="#" class="active" data-page="dashboard"><i class="fa-solid fa-chart-pie"></i> Dashboard</a>
+                <a href="#" data-page="image-upload"><i class="fa-solid fa-image"></i> Image Detection</a>
+                <a href="#" data-page="history"><i class="fa-solid fa-clock-rotate-left"></i> History</a>
+                <a href="#" data-page="alerts"><i class="fa-solid fa-bell"></i> Alerts</a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header>
+                <h2>Dashboard Overview</h2>
+                <div class="user-profile">
+                    <span>Admin</span>
+                    <div class="avatar">A</div>
+                </div>
+            </header>
+
+            <div id="page-content">
+                <!-- Dashboard Page -->
+                <div class="page" id="dashboard-page">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="icon blue"><i class="fa-solid fa-eye"></i></div>
+                            <div class="info">
+                                <h3>Total Detections</h3>
+                                <p id="stat-total">0</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="icon orange"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                            <div class="info">
+                                <h3>Total Alerts</h3>
+                                <p id="stat-alerts">0</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="icon green"><i class="fa-solid fa-users"></i></div>
+                            <div class="info">
+                                <h3>People Detected</h3>
+                                <p id="stat-people">0</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="icon red"><i class="fa-solid fa-fire"></i></div>
+                            <div class="info">
+                                <h3>Fire/Smoke</h3>
+                                <p id="stat-fire">0</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tables-grid">
+                        <div class="table-container">
+                            <h3>Recent Detections</h3>
+                            <table id="recent-detections">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Label</th>
+                                        <th>Confidence</th>
+                                        <th>Time</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Populated by JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <div class="table-container">
+                            <h3>Recent Alerts</h3>
+                            <table id="recent-alerts">
+                                <thead>
+                                    <tr>
+                                        <th>Alert</th>
+                                        <th>Severity</th>
+                                        <th>Time</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Populated by JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Image Upload Page -->
+                <div class="page hidden" id="image-upload-page">
+                    <div class="upload-container">
+                        <h3>Upload Image for Detection</h3>
+                        <div class="upload-box" id="drop-zone">
+                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                            <p>Drag & Drop your image here or <span>browse</span></p>
+                            <input type="file" id="file-input" accept="image/*" hidden>
+                        </div>
+                        <div class="preview-area" id="preview-area" style="display: none;">
+                            <img id="image-preview" src="" alt="Preview">
+                            <div class="action-buttons" style="display: flex; gap: 10px; margin-top: 15px;">
+                                <button id="btn-detect" class="btn primary">Run Detection</button>
+                                <button id="btn-reupload" class="btn secondary">Re-upload Image</button>
+                            </div>
+                        </div>
+                        
+                        <div id="detection-results" style="display: none; margin-top: 2rem;">
+                            <h4>Results</h4>
+                            <div class="results-grid">
+                                <div>
+                                    <h5>Objects Detected</h5>
+                                    <ul id="objects-list"></ul>
+                                </div>
+                                <div>
+                                    <h5>Violations</h5>
+                                    <ul id="violations-list" class="violations"></ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- History Page -->
+                <div class="page hidden" id="history-page">
+                    <h3>Detection History</h3>
+                    <div class="table-container">
+                        <table id="history-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Label</th>
+                                    <th>Confidence</th>
+                                    <th>Time</th>
+                                    <th>Violation</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Populated by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Alerts Page -->
+                <div class="page hidden" id="alerts-page">
+                    <h3>All Alerts</h3>
+                    <div class="table-container">
+                        <table id="alerts-table">
+                            <thead>
+                                <tr>
+                                    <th>Alert</th>
+                                    <th>Severity</th>
+                                    <th>Message</th>
+                                    <th>Time</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Populated by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <script src="/static/js/app.js"></script>
+</body>
+</html>

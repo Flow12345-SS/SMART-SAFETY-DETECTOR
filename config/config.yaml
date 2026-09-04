@@ -1,0 +1,26 @@
+model:
+  path: models/best.pt
+  confidence_threshold: 0.50
+
+camera:
+  source: 0
+  fps_limit: 30
+
+alerts:
+  cooldown_seconds: 10
+  severities:
+    NO_HELMET: MEDIUM
+    NO_VEST: MEDIUM
+    FIRE: CRITICAL
+    SMOKE: HIGH
+    MOBILE_PHONE: LOW
+
+detection_classes:
+  - person
+  - helmet
+  - vest
+  - no-helmet
+  - no-vest
+  - fire
+  - smoke
+  - mobile-phone
